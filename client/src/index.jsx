@@ -4,7 +4,6 @@ import $ from 'jquery';
 import Promise from 'bluebird';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
-import Repo from '../../database/index.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,10 +17,10 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    //ajax post here
-    $.get(`https://api.github.com/users/${term}/repos`, (data) => {
-      
-    });
+    
+    $.post('/repos/import', (data) => { 
+      console.log('this is the response data index.jsx: ', data);
+    })
   }
 
   render () {

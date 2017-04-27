@@ -1,14 +1,17 @@
 const express = require('express');
-// const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
+const Repo = require('./../database/index.js');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
 app.post('/repos/import', function (req, res) {
-  // TODO
+  res.send('got a post request');
+  console.log('req.body: ', req.body);
+  //take the username and send it along to github
+    //take the data from github and put it in the db
 });
 
 app.get('/repos', function (req, res) {
