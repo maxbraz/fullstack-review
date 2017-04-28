@@ -1,9 +1,14 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import RepoListItem from './RepoListItem.jsx';
 
-const RepoList = (props) => (
+const RepoList = ({repos}) => (
   <div>
-    <h4> Repo List Component </h4>
-    There are {props.repos.length} repos.
+    <ol>
+      {repos.map((repo, i) => {
+        return <RepoListItem key={i} repo={repo} />
+      })}
+    </ol>
   </div>
 )
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import Promise from 'bluebird';
+import Promise from 'bluebird';  
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
+import Data from '../../data.json'
 
 class App extends React.Component {
   constructor(props) {
@@ -13,14 +14,38 @@ class App extends React.Component {
     }
 
     this.search = this.search.bind(this);
+    this.fetch = this.fetch.bind(this);
+  }
+
+  componentWillMount() {
+    this.fetch();
   }
 
   search (term) {
-    console.log(`${term} was searched`);
-    
-    $.post('/repos/import', (data) => { 
-      console.log('this is the response data index.jsx: ', data);
+    term = {username: term};
+
+    $.ajax({
+      type: 'POST',
+      url: '/repos/import', 
+      data: JSON.stringify(term),
+      contentType: "application/json",
+      success: (data) => {
+      },
+      error: (err) => {
+        console.log('post error: ', err);
+      }
     })
+
+    this.fetch();
+  }
+
+  fetch() {
+    let fetchedRepos;
+
+    $.get('/repos', (repos) => {
+      fetchedRepos = JSON.parse(repos);
+      this.setState({ repos: fetchedRepos });
+    });
   }
 
   render () {
